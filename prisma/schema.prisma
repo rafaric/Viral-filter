@@ -1,0 +1,76 @@
+// Prisma schema for viral-filter
+// SQLite database with 30-day retention
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model VideoCache {
+  id            String   @id // YouTube video ID
+  title         String
+  description   String?
+  channelId     String
+  channelTitle  String
+  publishedAt   DateTime
+  viewCount     Int?
+  likeCount     Int?
+  commentCount  Int?
+  categoryId    String?
+  tags          String?  // JSON array stored as string
+  thumbnailUrl  String?
+  fetchedAt     DateTime @default(now())
+  analyzedAt    DateTime?
+  aiAnalysis    String?  // AI-generated insights
+
+  @@index([channelId])
+  @@index([publishedAt])
+  @@index([fetchedAt])
+}
+
+model ChannelWatchlist {
+  id               String   @id // YouTube channel ID
+  title            String
+  description      String?
+  subscriberCount  Int?
+  videoCount       Int?
+  thumbnailUrl     String?
+  addedAt          DateTime @default(now())
+  lastAnalyzed     DateTime?
+
+  @@index([addedAt])
+}
+
+model SearchHistory {
+  id           String   @id @default(cuid())
+  query        String
+  filters      String   // JSON stored as string
+  resultsCount Int
+  createdAt    DateTime @default(now())
+
+  @@index([createdAt])
+}
+
+model QuotaUsage {
+  id        String   @id @default(cuid())
+  date      String   // YYYY-MM-DD
+  used      Int      @default(0)
+  updatedAt DateTime @default(now())
+
+  @@unique([date])
+}
+
+model TrendSnapshot {
+  id         String   @id @default(cuid())
+  categoryId String
+  country    String
+  capturedAt DateTime  @default(now())
+  videoIds   String   // JSON array of top video IDs
+
+  @@index([capturedAt])
+  @@index([categoryId, country])
+}

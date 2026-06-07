@@ -1,0 +1,30 @@
+{
+	"subagents": {
+		"agentOverrides": {
+			"context-builder": {
+				"model": "opencode-go/kimi-k2.6"
+			},
+			"delegate": {
+				"model": "openai-codex/gpt-5.4"
+			},
+			"oracle": {
+				"model": "openai-codex/gpt-5.4"
+			},
+			"planner": {
+				"model": "opencode-go/qwen3.6-plus"
+			},
+			"researcher": {
+				"model": "opencode-go/kimi-k2.6"
+			},
+			"reviewer": {
+				"model": "openai-codex/gpt-5.4"
+			},
+			"scout": {
+				"model": "opencode-go/kimi-k2.6"
+			},
+			"worker": {
+				"model": "opencode-go/minimax-m2.7"
+			}
+		}
+	}
+}

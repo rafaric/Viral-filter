@@ -34,33 +34,33 @@ Chain strategy: stacked-to-main
 
 ### Phase 1: Foundation
 
-- [ ] **T1.1**: Initialize Next.js 16+ project with App Router, TypeScript, Tailwind CSS
+- [x] **T1.1**: Initialize Next.js 16+ project with App Router, TypeScript, Tailwind CSS
   - Files: `package.json`, `next.config.ts`, `tsconfig.json`, `tailwind.config.ts`, `postcss.config.mjs`, `app/layout.tsx`, `app/page.tsx`, `app/globals.css`
   - Effort: medium
   - Dependencies: none
 
-- [ ] **T1.2**: Install and configure shadcn/ui
+- [x] **T1.2**: Install and configure shadcn/ui
   - Files: `components.json`, `components/ui/*` (button, input, card, badge, dialog, tabs, select, switch, slider, separator, tooltip, progress, collapsible, dropdown-menu)
   - Effort: small
   - Dependencies: T1.1
 
-- [ ] **T1.3**: Set up Prisma with SQLite schema
+- [x] **T1.3**: Set up Prisma with SQLite schema
   - Files: `prisma/schema.prisma`, `lib/db.ts` (Prisma client singleton)
   - Models: `VideoCache`, `ChannelWatchlist`, `SearchHistory`, `QuotaUsage`, `TrendSnapshot` (per design.md)
   - Effort: medium
   - Dependencies: T1.1
 
-- [ ] **T1.4**: Define TypeScript types shared across the app
+- [x] **T1.4**: Define TypeScript types shared across the app
   - Files: `types/index.ts` (Video, Channel, SearchFilters, AnalysisRequest, TrendData, QuotaData)
   - Effort: small
   - Dependencies: T1.3
 
-- [ ] **T1.5**: Set up environment variables and validation
+- [x] **T1.5**: Set up environment variables and validation
   - Files: `.env.example`, `.env.local`, `lib/env.ts` (runtime env validation)
   - Effort: small
   - Dependencies: T1.1
 
-- [ ] **T1.6**: [P] Write tests for Prisma schema integrity and env validation
+- [x] **T1.6**: [P] Write tests for Prisma schema integrity and env validation
   - Files: `__tests__/schema.test.ts`, `__tests__/env.test.ts`
   - Effort: small
   - Dependencies: T1.3, T1.5
