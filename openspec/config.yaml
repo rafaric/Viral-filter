@@ -1,0 +1,64 @@
+project: viral-filter
+phase: init
+execution_mode: interactive
+artifact_store: openspec
+review_budget: 400 lines
+strict_tdd: true
+
+tech_stack:
+  frontend:
+    framework: Next.js
+    runtime: local (localhost)
+  ai:
+    provider: OpenCode Go
+    endpoint: https://opencode.ai/zen/go/v1/chat/completions
+    models:
+      - qwen3.7
+      - deepseek-v4
+      - glm-5
+      - kimi-k2
+      - minimax-m3
+    cost: $10/month
+    api_type: OpenAI-compatible
+  data:
+    youtube:
+      api: YouTube Data API v3
+      tier: free
+      quota: 10,000 units/day
+
+features:
+  - name: Idea Generator
+    description: AI-powered viral topic discovery with filters
+    status: planned
+  - name: Keyword Research
+    description: Find trending keywords and patterns
+    status: planned
+  - name: Niche Analysis
+    description: Monitor 400K+ channels, detect trends before they explode
+    status: planned
+  - name: Competitor Analysis
+    description: Compare with similar channels, analyze thumbnails/titles
+    status: planned
+  - name: AI Assistant
+    description: Content optimization suggestions (titles, descriptions, hooks)
+    status: planned
+  - name: Thumbnail Generator
+    description: AI-generated thumbnails
+    status: deferred
+
+target_users:
+  - YouTube content creators
+  - Niche researchers
+  - Growth-focused channels
+
+value_proposition: Local clone of viralyt.ai without subscription fees
+
+sdd:
+  phases:
+    - init
+    - proposal
+    - design
+    - apply
+    - verify
+  current_phase: init
+  next_phase: proposal
