@@ -1,16 +1,24 @@
-const nextJest = require('next/jest')
+const nextJest = require("next/jest");
 
 const createJestConfig = nextJest({
-  dir: './',
-})
+	dir: "./",
+});
 
 const config = {
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
-  testEnvironment: 'jest-environment-jsdom',
-  moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1',
-  },
-  testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/.next/'],
-}
+	setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
+	testEnvironment: "jsdom",
+	moduleNameMapper: {
+		"^@/(.*)$": "<rootDir>/src/$1",
+	},
+	testPathIgnorePatterns: ["<rootDir>/node_modules/", "<rootDir>/.next/"],
+	clearMocks: true,
+	resetMocks: true,
+	// Use node environment for API route tests
+	globals: {
+		"ts-jest": {
+			isolatedModules: true,
+		},
+	},
+};
 
-module.exports = createJestConfig(config)
+module.exports = createJestConfig(config);

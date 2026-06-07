@@ -39,7 +39,10 @@ describe("Cache Service - Unit Tests", () => {
 
 	describe("Search Hash Generation", () => {
 		it("should generate consistent hash for same input", () => {
-			const data = JSON.stringify({ query: "test", filters: { country: "US" } });
+			const data = JSON.stringify({
+				query: "test",
+				filters: { country: "US" },
+			});
 			let hash1 = 0;
 			for (let i = 0; i < data.length; i++) {
 				const char = data.charCodeAt(i);

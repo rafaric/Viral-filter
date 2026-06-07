@@ -74,38 +74,38 @@ Chain strategy: stacked-to-main
 
 ### Phase 1: Foundation (continued)
 
-- [ ] **T2.1**: RED — Write tests for YouTube API service (search, videos.getById, channels.list)
+- [x] **T2.1**: RED — Write tests for YouTube API service (search, videos.getById, channels.list)
   - Files: `__tests__/services/youtube.test.ts`
   - Effort: medium
   - Dependencies: T1.4
 
-- [ ] **T2.2**: GREEN → TRIANGULATE → REFACTOR — Implement YouTube API service
+- [x] **T2.2**: GREEN → TRIANGULATE → REFACTOR — Implement YouTube API service
   - Files: `lib/services/youtube.ts`
   - Methods: `search()`, `getVideos()`, `getChannel()`, `getChannelVideos()`, `getTrending()`
   - Includes: request batching (max 50 IDs), rate-limit awareness, error handling
   - Effort: large (split across RED/GREEN/REFACTOR)
   - Dependencies: T2.1, T1.4
 
-- [ ] **T2.3**: RED — Write tests for quota tracker service
+- [x] **T2.3**: RED — Write tests for quota tracker service
   - Files: `__tests__/services/quota.test.ts`
   - Covers: increment, check limits, soft limit (80%), hard limit (95%), reset
   - Effort: small
   - Dependencies: T1.3
 
-- [ ] **T2.4**: GREEN → REFACTOR — Implement quota tracker service
+- [x] **T2.4**: GREEN → REFACTOR — Implement quota tracker service
   - Files: `lib/services/quota.ts`
   - Methods: `increment()`, `getStatus()`, `canMakeRequest()`, `resetDaily()`
   - Persistence: reads/writes `QuotaUsage` model
   - Effort: medium
   - Dependencies: T2.3, T1.3
 
-- [ ] **T2.5**: RED — Write tests for cache service (video, search, channel)
+- [x] **T2.5**: RED — Write tests for cache service (video, search, channel)
   - Files: `__tests__/services/cache.test.ts`
   - Covers: cache hit/miss, TTL expiry (24h video, 6h channel, 1h search), search hash key
   - Effort: small
   - Dependencies: T1.3, T1.4
 
-- [ ] **T2.6**: GREEN → REFACTOR — Implement cache service
+- [x] **T2.6**: GREEN → REFACTOR — Implement cache service
   - Files: `lib/services/cache.ts`
   - Methods: `getVideo()`, `setVideo()`, `getSearch()`, `setSearch()`, `getChannel()`, `setChannel()`
   - Uses `VideoCache` model for persistence
@@ -121,53 +121,53 @@ Chain strategy: stacked-to-main
 
 ### Phase 1: Foundation (continued)
 
-- [ ] **T3.1**: RED — Write tests for `/api/search` route
+- [x] **T3.1**: RED — Write tests for `/api/search` route
   - Files: `__tests__/api/search.test.ts`
   - Covers: cache hit, cache miss → YouTube fetch, quota check, filter application, pagination
   - Effort: medium
   - Dependencies: T2.2, T2.4, T2.6
 
-- [ ] **T3.2**: GREEN → REFACTOR — Implement `/api/search` (GET/POST)
+- [x] **T3.2**: GREEN → REFACTOR — Implement `/api/search` (GET/POST)
   - Files: `app/api/search/route.ts`
   - Logic: check cache → if miss, call YouTube → cache result → increment quota → return
   - Effort: medium
   - Dependencies: T3.1
 
-- [ ] **T3.3**: [P] Set up Zustand store for app state
+- [x] **T3.3**: [P] Set up Zustand store for app state
   - Files: `lib/store.ts` (search state, filters, results, loading states)
   - Effort: small
   - Dependencies: T1.4
 
-- [ ] **T3.4**: RED — Write tests for `FilterPanel` component
+- [x] **T3.4**: RED — Write tests for `FilterPanel` component
   - Files: `__tests__/components/FilterPanel.test.tsx`
   - Covers: filter state changes, collapsed/expanded, form submission
   - Effort: small
   - Dependencies: T1.2
 
-- [ ] **T3.5**: GREEN → REFACTOR — Implement `FilterPanel` component
+- [x] **T3.5**: GREEN → REFACTOR — Implement `FilterPanel` component
   - Files: `components/FilterPanel.tsx`
   - Filters: category, country, language, date range, min views, min likes, sort by
   - Effort: medium
   - Dependencies: T3.4, T1.2
 
-- [ ] **T3.6**: [P] RED — Write tests for `SearchBar` component
+- [x] **T3.6**: [P] RED — Write tests for `SearchBar` component
   - Files: `__tests__/components/SearchBar.test.tsx`
   - Covers: input, AI toggle, loading state, search submission
   - Effort: small
   - Dependencies: T1.2
 
-- [ ] **T3.7**: [P] GREEN → REFACTOR — Implement `SearchBar` component
+- [x] **T3.7**: [P] GREEN → REFACTOR — Implement `SearchBar` component
   - Files: `components/SearchBar.tsx`
   - Effort: small
   - Dependencies: T3.6, T3.3
 
-- [ ] **T3.8**: [P] Implement `VideoCard` component
+- [x] **T3.8**: [P] Implement `VideoCard` component
   - Files: `components/VideoCard.tsx`
   - States: default, hover, selected, analyzed
   - Effort: small
   - Dependencies: T1.2, T1.4
 
-- [ ] **T3.9**: Assemble dashboard page (`/`) with search + filters + results grid
+- [x] **T3.9**: Assemble dashboard page (`/`) with search + filters + results grid
   - Files: `app/page.tsx`, `components/ResultsGrid.tsx`
   - Effort: medium
   - Dependencies: T3.2, T3.3, T3.5, T3.7, T3.8

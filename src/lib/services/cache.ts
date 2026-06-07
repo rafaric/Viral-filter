@@ -46,7 +46,10 @@ export class CacheService {
 	/**
 	 * Get cached video by ID
 	 */
-	async getVideo(videoId: string, options: CacheOptions = {}): Promise<Video | null> {
+	async getVideo(
+		videoId: string,
+		options: CacheOptions = {},
+	): Promise<Video | null> {
 		const cached = await prisma.videoCache.findUnique({
 			where: { id: videoId },
 		});
@@ -135,7 +138,10 @@ export class CacheService {
 	/**
 	 * Get cached search results
 	 */
-	async getSearch(query: string, filters: SearchFilters): Promise<Video[] | null> {
+	async getSearch(
+		query: string,
+		filters: SearchFilters,
+	): Promise<Video[] | null> {
 		const searchHash = generateSearchHash(query, filters);
 
 		// Find recent search history entry
@@ -189,7 +195,11 @@ export class CacheService {
 	/**
 	 * Cache search results
 	 */
-	async setSearch(query: string, filters: SearchFilters, videos: Video[]): Promise<void> {
+	async setSearch(
+		query: string,
+		filters: SearchFilters,
+		videos: Video[],
+	): Promise<void> {
 		const searchHash = generateSearchHash(query, filters);
 		const videoIds = videos.map((v) => v.id).join(",");
 
