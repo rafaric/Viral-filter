@@ -7,12 +7,53 @@ import "@testing-library/jest-dom";
 	disconnect() {}
 };
 
+// Request/Response polyfills for jsdom
+if (typeof Request === "undefined") {
+	(global as Record<string, unknown>).Request = class Request {
+		url: string;
+		method: string;
+		headers: Headers;
+		constructor(url: string, init?: RequestInit) {
+			this.url = url;
+			this.method = init?.method || "GET";
+			this.headers = new Headers(init?.headers);
+		}
+	} as unknown as typeof Request;
+}
+
+if (typeof Response === "undefined") {
+	(global as Record<string, unknown>).Response = class Response {
+		status: number;
+		statusText: string;
+		constructor(_body?: BodyInit | null, init?: ResponseInit) {
+			this.status = init?.status || 200;
+			this.statusText = init?.statusText || "OK";
+		}
+		// Add json method to Response instance
+		static json = (() => {
+			return async (data: unknown, init?: ResponseInit) => {
+				const body = JSON.stringify(data);
+				return new Response(body, {
+					...init,
+					headers: {
+						"Content-Type": "application/json",
+						...(init?.headers || {}),
+					},
+				});
+			};
+		})();
+	} as unknown as typeof Response;
+}
+
 // TextEncoder/TextDecoder polyfills for SSE streaming tests (jsdom doesn't have them)
 // Check if already available (Node 20+ has it natively)
 if (typeof TextEncoder === "undefined" || typeof TextDecoder === "undefined") {
 	// Use node's built-in from util if available
 	try {
-		const { TextEncoder: NodeTextEncoder, TextDecoder: NodeTextDecoder } = require("util");
+		const {
+			TextEncoder: NodeTextEncoder,
+			TextDecoder: NodeTextDecoder,
+		} = require("util");
 		if (typeof TextEncoder === "undefined") {
 			(global as Record<string, unknown>).TextEncoder = NodeTextEncoder;
 		}
@@ -45,7 +86,8 @@ if (typeof TextEncoder === "undefined" || typeof TextDecoder === "undefined") {
 		if (typeof TextDecoder === "undefined") {
 			(global as Record<string, unknown>).TextDecoder = class {
 				decode(buffer: ArrayBuffer | Uint8Array): string {
-					const bytes = buffer instanceof Uint8Array ? buffer : new Uint8Array(buffer);
+					const bytes =
+						buffer instanceof Uint8Array ? buffer : new Uint8Array(buffer);
 					return String.fromCharCode.apply(null, Array.from(bytes));
 				}
 			};
