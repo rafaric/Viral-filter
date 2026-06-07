@@ -74,3 +74,15 @@ model TrendSnapshot {
   @@index([capturedAt])
   @@index([categoryId, country])
 }
+
+model AIAnalysisCache {
+  id        String   @id // Hash-based content identifier
+  type      String   @default("general")
+  dataHash  String   // Duplicate of id for querying
+  result    String   // Cached AI analysis result
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+
+  @@index([createdAt])
+  @@index([dataHash])
+}

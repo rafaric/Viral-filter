@@ -181,13 +181,13 @@ Chain strategy: stacked-to-main
 
 ### Phase 2: AI Integration
 
-- [ ] **T4.1**: RED — Write tests for OpenCode Go client wrapper
+- [x] **T4.1**: RED — Write tests for OpenCode Go client wrapper
   - Files: `__tests__/services/aiclient.test.ts`
   - Covers: streaming SSE, non-streaming fallback, error handling, model selection
   - Effort: medium
   - Dependencies: T1.4, T1.5
 
-- [ ] **T4.2**: GREEN → REFACTOR — Implement OpenCode Go client wrapper
+- [x] **T4.2**: GREEN → REFACTOR — Implement OpenCode Go client wrapper
   - Files: `lib/services/aiclient.ts`
   - Methods: `streamChat()`, `chat()`, available models list
   - OpenAI-compatible endpoint: `https://opencode.ai/zen/go/v1/chat/completions`
@@ -195,25 +195,25 @@ Chain strategy: stacked-to-main
   - Effort: medium
   - Dependencies: T4.1
 
-- [ ] **T4.3**: RED — Write tests for AI prompt builder
+- [x] **T4.3**: RED — Write tests for AI prompt builder
   - Files: `__tests__/services/prompts.test.ts`
   - Covers: idea, keyword, competitor, optimize prompt templates
   - Effort: small
   - Dependencies: T1.4
 
-- [ ] **T4.4**: GREEN → REFACTOR — Implement AI prompt builder
+- [x] **T4.4**: GREEN → REFACTOR — Implement AI prompt builder
   - Files: `lib/services/prompts.ts`
   - Templates for each analysis type with video data injection
   - Effort: medium
   - Dependencies: T4.3
 
-- [ ] **T4.5**: RED — Write tests for `/api/analyze` SSE route
+- [x] **T4.5**: RED — Write tests for `/api/analyze` SSE route
   - Files: `__tests__/api/analyze.test.ts`
   - Covers: SSE chunk format, done event, error event, quota check, cache hit
   - Effort: medium
   - Dependencies: T4.2, T4.4, T2.4
 
-- [ ] **T4.6**: GREEN → REFACTOR — Implement `/api/analyze` POST route (SSE)
+- [x] **T4.6**: GREEN → REFACTOR — Implement `/api/analyze` POST route (SSE)
   - Files: `app/api/analyze/route.ts`
   - Request: `{ type, data, model?, outputFormat? }`
   - Response: SSE stream with `{ type: "chunk" }` and `{ type: "done", result }`
@@ -221,7 +221,7 @@ Chain strategy: stacked-to-main
   - Effort: large (split across subtasks if needed)
   - Dependencies: T4.5, T2.6
 
-- [ ] **T4.7**: [P] Implement AI cache helper (analysis result caching with content hash)
+- [x] **T4.7**: [P] Implement AI cache helper (analysis result caching with content hash)
   - Files: `lib/services/aiCache.ts`
   - TTL: 7 days, hash-based dedup
   - Effort: small
