@@ -93,9 +93,7 @@ describe("OpenCode Go Client", () => {
 			});
 
 			const client = new OpenCodeClient("test-api-key");
-			const result = await client.chat([
-				{ role: "user", content: "Hello" },
-			]);
+			const result = await client.chat([{ role: "user", content: "Hello" }]);
 
 			expect(mockFetch).toHaveBeenCalledWith(
 				"https://opencode.ai/zen/go/v1/chat/completions",
@@ -119,18 +117,18 @@ describe("OpenCode Go Client", () => {
 			});
 
 			const client = new OpenCodeClient("invalid-key");
-			await expect(client.chat([{ role: "user", content: "Hi" }])).rejects.toThrow(
-				"API error: 401 Unauthorized",
-			);
+			await expect(
+				client.chat([{ role: "user", content: "Hi" }]),
+			).rejects.toThrow("API error: 401 Unauthorized");
 		});
 
 		it("should handle network errors", async () => {
 			mockFetch.mockRejectedValueOnce(new Error("Network error"));
 
 			const client = new OpenCodeClient("test-api-key");
-			await expect(client.chat([{ role: "user", content: "Hi" }])).rejects.toThrow(
-				"Network error",
-			);
+			await expect(
+				client.chat([{ role: "user", content: "Hi" }]),
+			).rejects.toThrow("Network error");
 		});
 	});
 
@@ -260,7 +258,9 @@ describe("OpenCode Go Client", () => {
 							.fn()
 							.mockResolvedValueOnce({
 								done: false,
-								value: new TextEncoder().encode('data: {"choices":[{"delta":{"content":"Done"}}]}\n\n'),
+								value: new TextEncoder().encode(
+									'data: {"choices":[{"delta":{"content":"Done"}}]}\n\n',
+								),
 							})
 							.mockResolvedValueOnce({
 								done: false,

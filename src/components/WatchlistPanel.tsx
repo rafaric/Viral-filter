@@ -119,9 +119,7 @@ export function WatchlistPanel({
 						)}
 					</Button>
 				</div>
-				{error && (
-					<p className="text-xs text-destructive">{error}</p>
-				)}
+				{error && <p className="text-xs text-destructive">{error}</p>}
 			</div>
 
 			{/* Channel list */}
@@ -154,7 +152,9 @@ export function WatchlistPanel({
 
 									{/* Info */}
 									<div className="flex-1 min-w-0">
-										<p className="text-sm font-medium truncate">{channel.title}</p>
+										<p className="text-sm font-medium truncate">
+											{channel.title}
+										</p>
 										<div className="flex items-center gap-1 text-xs text-muted-foreground">
 											<Clock className="h-3 w-3" />
 											<span>{formatRelativeTime(channel.lastAnalyzed)}</span>

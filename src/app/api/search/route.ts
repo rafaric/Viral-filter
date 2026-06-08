@@ -75,16 +75,12 @@ function applyFilters(videos: Video[], filters: SearchFilters): Video[] {
 	// Filter by date range
 	if (filters.publishedAfter) {
 		const after = new Date(filters.publishedAfter);
-		filtered = filtered.filter(
-			(v) => new Date(v.publishedAt) >= after,
-		);
+		filtered = filtered.filter((v) => new Date(v.publishedAt) >= after);
 	}
 
 	if (filters.publishedBefore) {
 		const before = new Date(filters.publishedBefore);
-		filtered = filtered.filter(
-			(v) => new Date(v.publishedAt) <= before,
-		);
+		filtered = filtered.filter((v) => new Date(v.publishedAt) <= before);
 	}
 
 	return filtered;
@@ -195,10 +191,7 @@ export async function POST(request: NextRequest) {
 		try {
 			body = await request.json();
 		} catch {
-			return NextResponse.json(
-				{ error: "Invalid JSON body" },
-				{ status: 400 },
-			);
+			return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
 		}
 
 		// Validate query
@@ -218,7 +211,10 @@ export async function POST(request: NextRequest) {
 		const quotaService = createQuotaService();
 
 		// Try to get cached results first
-		const cachedResults = await cacheService.getSearch(body.query.trim(), filters);
+		const cachedResults = await cacheService.getSearch(
+			body.query.trim(),
+			filters,
+		);
 		if (cachedResults && cachedResults.length > 0) {
 			// Apply additional filters to cached results
 			let filteredResults = cachedResults;
@@ -252,7 +248,11 @@ export async function POST(request: NextRequest) {
 		}
 
 		// Cache the results
-		await cacheService.setSearch(body.query.trim(), filters, searchResult.items);
+		await cacheService.setSearch(
+			body.query.trim(),
+			filters,
+			searchResult.items,
+		);
 
 		// Track quota usage
 		const quotaCost = searchResult.items.length + 100;

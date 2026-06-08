@@ -236,53 +236,53 @@ Chain strategy: stacked-to-main
 
 ### Phase 2: AI Integration (continued)
 
-- [ ] **T5.1**: RED — Write tests for `AIStreamOutput` component
+- [x] **T5.1**: RED — Write tests for `AIStreamOutput` component
   - Files: `__tests__/components/AIStreamOutput.test.tsx`
   - Covers: idle, streaming (chunk rendering), complete, error states, text/JSON toggle
   - Effort: medium
   - Dependencies: T1.2
 
-- [ ] **T5.2**: GREEN → REFACTOR — Implement `AIStreamOutput` component
+- [x] **T5.2**: GREEN → REFACTOR — Implement `AIStreamOutput` component
   - Files: `components/AIStreamOutput.tsx`
   - SSE connection management, chunked display, copy-to-clipboard
   - Effort: medium
   - Dependencies: T5.1
 
-- [ ] **T5.3**: [P] Implement `OutputFormatToggle` component
+- [x] **T5.3**: [P] Implement `OutputFormatToggle` component
   - Files: `components/OutputFormatToggle.tsx`
   - Effort: small
   - Dependencies: T1.2
 
-- [ ] **T5.4**: [P] Implement `QuotaIndicator` component
+- [x] **T5.4**: [P] Implement `QuotaIndicator` component
   - Files: `components/QuotaIndicator.tsx`
   - States: green (<50%), yellow (50-80%), red (>80%)
   - Effort: small
   - Dependencies: T1.2, T2.4
 
-- [ ] **T5.5**: Implement `/api/quota` GET route
+- [x] **T5.5**: Implement `/api/quota` GET route
   - Files: `app/api/quota/route.ts`
   - Response: `{ daily: { used, limit, remaining, resetAt }, weekly: { used, trend } }`
   - Effort: small
   - Dependencies: T2.4
 
-- [ ] **T5.6**: Assemble AI Assistant modal/panel
+- [x] **T5.6**: Assemble AI Assistant modal/panel
   - Files: `components/AIAssistantPanel.tsx`
   - Analysis type selector, input area, streaming output, format toggle
   - Effort: medium
   - Dependencies: T5.2, T5.3, T4.4
 
-- [ ] **T5.7**: Integrate AI Assistant into dashboard page
+- [x] **T5.7**: Integrate AI Assistant into dashboard page
   - Files: `app/page.tsx` (update), `components/AIAssistantPanel.tsx` (update)
   - Collapsible panel, video selection for analysis context
   - Effort: medium
   - Dependencies: T3.9, T5.6, T5.4
 
-- [ ] **T5.8**: Wire up Idea Generator flow (select videos → analyze → display)
+- [x] **T5.8**: Wire up Idea Generator flow (select videos → analyze → display)
   - Files: `lib/store.ts` (update), `components/AIAssistantPanel.tsx` (update)
   - Effort: small
   - Dependencies: T5.7
 
-- [ ] **T5.9**: Wire up Keyword Extraction flow
+- [x] **T5.9**: Wire up Keyword Extraction flow
   - Files: `components/AIAssistantPanel.tsx` (update)
   - Effort: small
   - Dependencies: T5.8
@@ -296,49 +296,49 @@ Chain strategy: stacked-to-main
 
 ### Phase 3: Analysis
 
-- [ ] **T6.1**: RED — Write tests for `/api/channels/[id]` route
+- [x] **T6.1**: RED — Write tests for `/api/channels/[id]` route
   - Files: `__tests__/api/channels.test.ts`
   - Covers: cache hit, cache miss, watchlist channel stats, recent videos
   - Effort: medium
   - Dependencies: T2.2, T2.6
 
-- [ ] **T6.2**: GREEN → REFACTOR — Implement `/api/channels/[id]` GET route
+- [x] **T6.2**: GREEN → REFACTOR — Implement `/api/channels/[id]` GET route
   - Files: `app/api/channels/[id]/route.ts`
   - Response: channel info, stats (avgViews, avgLikes, totalVideos), recentVideos
   - Effort: medium
   - Dependencies: T6.1
 
-- [ ] **T6.3**: RED — Write tests for `/api/channels` route (watchlist CRUD)
+- [x] **T6.3**: RED — Write tests for `/api/channels` route (watchlist CRUD)
   - Files: `__tests__/api/channels-list.test.ts`
   - Covers: GET list, POST add, DELETE remove
   - Effort: small
   - Dependencies: T1.3
 
-- [ ] **T6.4**: GREEN → REFACTOR — Implement `/api/channels` route (watchlist CRUD)
+- [x] **T6.4**: GREEN → REFACTOR — Implement `/api/channels` route (watchlist CRUD)
   - Files: `app/api/channels/route.ts`
   - GET: list watchlist, POST: add channel (fetch from YouTube), DELETE: remove
   - Effort: medium
   - Dependencies: T6.3
 
-- [ ] **T6.5**: [P] Implement `ChannelCard` component
+- [x] **T6.5**: [P] Implement `ChannelCard` component
   - Files: `components/ChannelCard.tsx`
   - States: default, hover, analyzing
   - Effort: small
   - Dependencies: T1.2, T1.4
 
-- [ ] **T6.6**: [P] Implement `WatchlistPanel` component (sidebar)
+- [x] **T6.6**: [P] Implement `WatchlistPanel` component (sidebar)
   - Files: `components/WatchlistPanel.tsx`
   - Add channel, list channels, remove, last analyzed timestamp
   - Effort: medium
   - Dependencies: T6.5, T1.2
 
-- [ ] **T6.7**: Build `/watchlist` page
+- [x] **T6.7**: Build `/watchlist` page
   - Files: `app/watchlist/page.tsx`
   - Full watchlist management view with channel details
   - Effort: medium
   - Dependencies: T6.2, T6.4, T6.6
 
-- [ ] **T6.8**: Implement watchlist background sync utility
+- [x] **T6.8**: Implement watchlist background sync utility
   - Files: `lib/services/watchlistSync.ts`
   - Smart polling: only fetch new videos since lastAnalyzed
   - Update `lastAnalyzed` on `ChannelWatchlist`
@@ -354,13 +354,13 @@ Chain strategy: stacked-to-main
 
 ### Phase 3: Analysis (continued)
 
-- [ ] **T7.1**: RED — Write tests for `/api/trending` route
+- [x] **T7.1**: RED — Write tests for `/api/trending` route
   - Files: `__tests__/api/trending.test.ts`
   - Covers: category + country + period params, emerging/stable/declining classification, keyword extraction
   - Effort: medium
   - Dependencies: T2.2, T2.6
 
-- [ ] **T7.2**: GREEN → REFACTOR — Implement `/api/trending` GET route
+- [x] **T7.2**: GREEN → REFACTOR — Implement `/api/trending` GET route
   - Files: `app/api/trending/route.ts`
   - Query params: category, country, period (24h|7d|30d)
   - Response: trends (emerging/stable/declining), keywords, channels
@@ -368,29 +368,29 @@ Chain strategy: stacked-to-main
   - Effort: medium
   - Dependencies: T7.1
 
-- [ ] **T7.3**: [P] Implement `TrendChart` component
+- [x] **T7.3**: [P] Implement `TrendChart` component
   - Files: `components/TrendChart.tsx`
   - States: loading, loaded, empty
   - Uses simple SVG or lightweight charting (no heavy dependencies)
   - Effort: medium
   - Dependencies: T1.2
 
-- [ ] **T7.4**: Implement `/trends` page
+- [x] **T7.4**: Implement `/trends` page
   - Files: `app/trends/page.tsx`
   - Category selector, country selector, period toggle
   - Trend results with chart, keyword cloud, top channels
   - Effort: medium
   - Dependencies: T7.2, T7.3
 
-- [ ] **T7.5**: Implement competitor comparison flow
+- [x] **T7.5**: Implement competitor comparison flow
   - Files: `components/CompetitorComparison.tsx`, `lib/services/competitor.ts`
   - Compare channels side-by-side (stats, recent videos, growth patterns)
   - Uses AI analysis with competitor prompt
   - Effort: large (may need split)
   - Dependencies: T6.2, T4.4, T5.2
 
-- [ ] **T7.6**: Implement trend history view (30-day snapshots)
-  - Files: `app/trends/history/page.tsx`, `lib/services/trendHistory.ts`
+- [x] **T7.6**: Implement trend history view (30-day snapshots)
+  - Files: `app/trends/history/page.tsx`, `lib/services/trendHistory.ts`, `app/api/trends/history/route.ts`
   - Display historical `TrendSnapshot` data with date range picker
   - Effort: medium
   - Dependencies: T7.2, T1.3
@@ -404,46 +404,43 @@ Chain strategy: stacked-to-main
 
 ### Phase 4: Polish
 
-- [ ] **T8.1**: [P] Implement export utility (JSON + CSV)
+- [x] **T8.1**: [P] RED → GREEN → REFACTOR — Export utility
   - Files: `lib/services/export.ts`, `__tests__/services/export.test.ts`
-  - Export: videos, search results, watchlist, trend data
-  - RED → GREEN → REFACTOR
+  - Export: videos, search results, watchlist, trend data (JSON + CSV)
   - Effort: medium
   - Dependencies: T1.4
 
-- [ ] **T8.2**: [P] Implement import/backup utility
+- [x] **T8.2**: [P] RED → GREEN → REFACTOR — Import/backup utility
   - Files: `lib/services/import.ts`, `__tests__/services/import.test.ts`
-  - Import: JSON backup restore, conflict resolution
-  - RED → GREEN → REFACTOR
+  - Import: JSON backup restore, conflict resolution (overwrite/skip/merge)
   - Effort: medium
   - Dependencies: T8.1, T1.3
 
-- [ ] **T8.3**: Build `/settings` page
+- [x] **T8.3**: Build `/settings` page
   - Files: `app/settings/page.tsx`
   - Sections: API keys (YouTube, OpenCode), quota config, export/import actions
   - Effort: medium
   - Dependencies: T8.1, T8.2
 
-- [ ] **T8.4**: Add global error handling + retry logic
+- [x] **T8.4**: Add global error handling + retry logic
   - Files: `app/error.tsx`, `app/not-found.tsx`, `lib/services/retry.ts`, `__tests__/services/retry.test.ts`
-  - Retry with exponential backoff for YouTube API
-  - User-friendly error boundaries
+  - Retry with exponential backoff for YouTube API, user-friendly error boundaries
   - Effort: medium
   - Dependencies: T2.2
 
-- [ ] **T8.5**: Performance optimization — response caching headers, SWR/stale-while-revalidate
-  - Files: `lib/services/cache.ts` (enhance), route handlers (cache headers)
+- [x] **T8.5**: Performance optimization — response caching headers, SWR/stale-while-revalidate
+  - Files: `lib/services/cache.ts` (enhanced), route handlers (cache headers)
   - Add `revalidate` tags, implement background refresh pattern
   - Effort: medium
   - Dependencies: T2.6, T3.2
 
-- [ ] **T8.6**: Add app layout with navigation + QuotaIndicator in header
+- [x] **T8.6**: Add app layout with navigation + QuotaIndicator in header
   - Files: `app/layout.tsx` (update), `components/AppHeader.tsx`, `components/AppNav.tsx`
   - Logo, navigation links, quota indicator
   - Effort: small
   - Dependencies: T5.4, T1.2
 
-- [ ] **T8.7**: [P] Final integration testing + smoke tests
+- [x] **T8.7**: [P] RED → GREEN → REFACTOR — Final integration tests + smoke tests
   - Files: `__tests__/integration/smoke.test.ts`
   - End-to-end flow: search → cache → analyze → export
   - Effort: medium

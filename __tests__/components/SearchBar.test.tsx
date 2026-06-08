@@ -44,7 +44,9 @@ describe("SearchBar", () => {
 		it("should render search button", () => {
 			render(<SearchBar />);
 
-			expect(screen.getByRole("button", { name: /search/i })).toBeInTheDocument();
+			expect(
+				screen.getByRole("button", { name: /search/i }),
+			).toBeInTheDocument();
 		});
 	});
 
@@ -125,7 +127,7 @@ describe("SearchBar", () => {
 			render(<SearchBar />);
 
 			// Loading spinner should be visible (check for animate-spin class on loader)
-			const loaders = document.querySelectorAll('.animate-spin');
+			const loaders = document.querySelectorAll(".animate-spin");
 			expect(loaders.length).toBeGreaterThan(0);
 		});
 	});

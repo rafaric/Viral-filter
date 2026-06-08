@@ -116,14 +116,19 @@ export function ChannelCard({
 					{/* Last analyzed */}
 					<div className="flex items-center gap-1 mt-2 text-xs text-muted-foreground">
 						<Clock className="h-3 w-3" />
-						<span>Last analyzed: {formatRelativeTime(channel.lastAnalyzed)}</span>
+						<span>
+							Last analyzed: {formatRelativeTime(channel.lastAnalyzed)}
+						</span>
 					</div>
 				</div>
 
 				{/* Status badge */}
 				<div className="flex-shrink-0">
 					{isAnalyzing ? (
-						<Badge variant="secondary" className="bg-yellow-500/10 text-yellow-600">
+						<Badge
+							variant="secondary"
+							className="bg-yellow-500/10 text-yellow-600"
+						>
 							Analyzing...
 						</Badge>
 					) : channel.lastAnalyzed ? (
@@ -170,7 +175,9 @@ export function ChannelCard({
 				<div className="absolute inset-0 bg-background/50 flex items-center justify-center">
 					<div className="flex flex-col items-center gap-2">
 						<div className="h-8 w-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-						<span className="text-sm text-muted-foreground">Analyzing channel...</span>
+						<span className="text-sm text-muted-foreground">
+							Analyzing channel...
+						</span>
 					</div>
 				</div>
 			)}

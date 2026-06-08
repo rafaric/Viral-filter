@@ -58,13 +58,17 @@ describe("FilterPanel", () => {
 		it("should render the apply button", () => {
 			render(<FilterPanel />);
 
-			expect(screen.getByRole("button", { name: /apply/i })).toBeInTheDocument();
+			expect(
+				screen.getByRole("button", { name: /apply/i }),
+			).toBeInTheDocument();
 		});
 
 		it("should render the clear button", () => {
 			render(<FilterPanel />);
 
-			expect(screen.getByRole("button", { name: /clear/i })).toBeInTheDocument();
+			expect(
+				screen.getByRole("button", { name: /clear/i }),
+			).toBeInTheDocument();
 		});
 	});
 

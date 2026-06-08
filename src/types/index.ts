@@ -55,10 +55,14 @@ export interface AnalysisRequest {
 	outputFormat?: "text" | "json";
 }
 
-export interface TrendData {
+export interface TrendClassification {
 	emerging: Video[];
 	stable: Video[];
 	declining: Video[];
+}
+
+export interface TrendData {
+	trends: TrendClassification;
 	keywords: string[];
 	channels: Channel[];
 	quotaUsed: number;

@@ -12,7 +12,8 @@ export const PROMPT_TEMPLATES = {
 	optimize: "optimize",
 } as const;
 
-export type PromptType = (typeof PROMPT_TEMPLATES)[keyof typeof PROMPT_TEMPLATES];
+export type PromptType =
+	(typeof PROMPT_TEMPLATES)[keyof typeof PROMPT_TEMPLATES];
 
 /**
  * Format a number with commas for readability
@@ -232,7 +233,9 @@ Please provide optimized version with:
 4. Why this optimization will perform better
 `;
 
-	return header + contentPart + (contextPart ? contextPart + "\n" : "") + footer;
+	return (
+		header + contentPart + (contextPart ? contextPart + "\n" : "") + footer
+	);
 }
 
 /**

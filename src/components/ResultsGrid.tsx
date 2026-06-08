@@ -62,7 +62,9 @@ export function ResultsGrid({
 
 	// Results grid
 	return (
-		<div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 ${className}`}>
+		<div
+			className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 ${className}`}
+		>
 			{videos.map((video) => (
 				<VideoCard
 					key={video.id}
@@ -71,7 +73,9 @@ export function ResultsGrid({
 					isAnalyzed={analyzedVideos.includes(video.id)}
 					onClick={() => onVideoClick?.(video)}
 					onSelect={() => onVideoSelect?.(video.id)}
-					onAnalyze={onVideoAnalyze ? () => onVideoAnalyze(video.id) : undefined}
+					onAnalyze={
+						onVideoAnalyze ? () => onVideoAnalyze(video.id) : undefined
+					}
 				/>
 			))}
 		</div>

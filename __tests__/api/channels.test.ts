@@ -71,7 +71,10 @@ class MockNextRequest {
 	method: string;
 	headers: Map<string, string>;
 
-	constructor(url: string, options?: { method?: string; headers?: Record<string, string> }) {
+	constructor(
+		url: string,
+		options?: { method?: string; headers?: Record<string, string> },
+	) {
 		this.url = url;
 		this.method = options?.method || "GET";
 		this.headers = new Map(Object.entries(options?.headers || {}));
@@ -87,7 +90,9 @@ describe("GET /api/channels/[id]", () => {
 		it("should return 400 if channel ID is missing", async () => {
 			const url = new URL("http://localhost/api/channels/");
 			const request = new MockNextRequest(url.toString()) as unknown as Request;
-			const response = await GET(request as never, { params: Promise.resolve({ id: "" }) });
+			const response = await GET(request as never, {
+				params: Promise.resolve({ id: "" }),
+			});
 
 			expect(response.status).toBe(400);
 		});
@@ -95,8 +100,12 @@ describe("GET /api/channels/[id]", () => {
 		it("should return 404 if channel not found", async () => {
 			mockYouTubeService.getChannel.mockResolvedValueOnce(null);
 
-			const request = new MockNextRequest("http://localhost/api/channels/UC123") as unknown as Request;
-			const response = await GET(request as never, { params: Promise.resolve({ id: "UC123" }) });
+			const request = new MockNextRequest(
+				"http://localhost/api/channels/UC123",
+			) as unknown as Request;
+			const response = await GET(request as never, {
+				params: Promise.resolve({ id: "UC123" }),
+			});
 
 			expect(response.status).toBe(404);
 		});
@@ -104,10 +113,16 @@ describe("GET /api/channels/[id]", () => {
 
 	describe("Error handling", () => {
 		it("should return 500 on YouTube API error", async () => {
-			mockYouTubeService.getChannel.mockRejectedValueOnce(new Error("API Error"));
+			mockYouTubeService.getChannel.mockRejectedValueOnce(
+				new Error("API Error"),
+			);
 
-			const request = new MockNextRequest("http://localhost/api/channels/UCerror") as unknown as Request;
-			const response = await GET(request as never, { params: Promise.resolve({ id: "UCerror" }) });
+			const request = new MockNextRequest(
+				"http://localhost/api/channels/UCerror",
+			) as unknown as Request;
+			const response = await GET(request as never, {
+				params: Promise.resolve({ id: "UCerror" }),
+			});
 
 			expect(response.status).toBe(500);
 		});

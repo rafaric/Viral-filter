@@ -28,7 +28,10 @@ export interface WatchlistSyncOptions {
  * Sync a single channel's videos
  * Only fetches videos published after lastAnalyzed
  */
-async function syncChannel(channelId: string, lastAnalyzed?: Date): Promise<{
+async function syncChannel(
+	channelId: string,
+	lastAnalyzed?: Date,
+): Promise<{
 	newVideos: number;
 	error?: string;
 }> {
@@ -85,7 +88,9 @@ async function syncChannel(channelId: string, lastAnalyzed?: Date): Promise<{
 /**
  * Sync all watchlist channels
  */
-export async function syncWatchlist(options: WatchlistSyncOptions = {}): Promise<SyncResult[]> {
+export async function syncWatchlist(
+	options: WatchlistSyncOptions = {},
+): Promise<SyncResult[]> {
 	const { channelId, maxChannels = BATCH_SIZE } = options;
 
 	const results: SyncResult[] = [];
@@ -98,7 +103,10 @@ export async function syncWatchlist(options: WatchlistSyncOptions = {}): Promise
 	});
 
 	for (const channel of channels) {
-		const result = await syncChannel(channel.id, channel.lastAnalyzed || undefined);
+		const result = await syncChannel(
+			channel.id,
+			channel.lastAnalyzed || undefined,
+		);
 		results.push({
 			channelId: channel.id,
 			success: !result.error,
@@ -227,7 +235,10 @@ export class WatchlistSyncService {
 			};
 		}
 
-		const result = await syncChannel(channelId, channel.lastAnalyzed || undefined);
+		const result = await syncChannel(
+			channelId,
+			channel.lastAnalyzed || undefined,
+		);
 		return {
 			channelId,
 			success: !result.error,

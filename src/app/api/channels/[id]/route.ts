@@ -38,15 +38,15 @@ function calculateStats(videos: Video[]) {
  * GET /api/channels/[id]
  * Returns channel details with stats and recent videos
  */
-export async function GET(
-	_request: Request,
-	context: RouteContext,
-) {
+export async function GET(_request: Request, context: RouteContext) {
 	try {
 		const { id } = await context.params;
 
 		if (!id) {
-			return NextResponse.json({ error: "Channel ID is required" }, { status: 400 });
+			return NextResponse.json(
+				{ error: "Channel ID is required" },
+				{ status: 400 },
+			);
 		}
 
 		// Get channel from YouTube API
@@ -87,7 +87,9 @@ export async function GET(
 
 		// If no cached videos, fetch from YouTube
 		if (recentVideos.length === 0) {
-			const channelVideos = await youtube.getChannelVideos(id, { maxResults: RECENT_VIDEOS_LIMIT });
+			const channelVideos = await youtube.getChannelVideos(id, {
+				maxResults: RECENT_VIDEOS_LIMIT,
+			});
 			recentVideos = channelVideos.items;
 			cached = false;
 

@@ -17,7 +17,11 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import {
+	Collapsible,
+	CollapsibleContent,
+	CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import { Separator } from "@/components/ui/separator";
 import type { SearchFilters } from "@/types";
 
@@ -117,7 +121,10 @@ export function FilterPanel({ onApply, className = "" }: FilterPanelProps) {
 	const { filters, isLoading } = search;
 
 	// Handle filter change
-	const handleFilterChange = (key: keyof SearchFilters, value: string | number) => {
+	const handleFilterChange = (
+		key: keyof SearchFilters,
+		value: string | number,
+	) => {
 		// Handle "all" placeholder values
 		const isAllValue = value === "all" || value === "";
 		// Convert string numbers to actual numbers for minViews/minLikes
@@ -258,23 +265,31 @@ export function FilterPanel({ onApply, className = "" }: FilterPanelProps) {
 						<label className="text-sm font-medium">Minimum Engagement</label>
 						<div className="space-y-3">
 							<div>
-								<label className="text-xs text-muted-foreground">Min Views</label>
+								<label className="text-xs text-muted-foreground">
+									Min Views
+								</label>
 								<Input
 									type="number"
 									placeholder="0"
 									value={filters.minViews || ""}
-									onChange={(e) => handleFilterChange("minViews", e.target.value)}
+									onChange={(e) =>
+										handleFilterChange("minViews", e.target.value)
+									}
 									aria-label="Minimum views"
 									min="0"
 								/>
 							</div>
 							<div>
-								<label className="text-xs text-muted-foreground">Min Likes</label>
+								<label className="text-xs text-muted-foreground">
+									Min Likes
+								</label>
 								<Input
 									type="number"
 									placeholder="0"
 									value={filters.minLikes || ""}
-									onChange={(e) => handleFilterChange("minLikes", e.target.value)}
+									onChange={(e) =>
+										handleFilterChange("minLikes", e.target.value)
+									}
 									aria-label="Minimum likes"
 									min="0"
 								/>
@@ -322,7 +337,7 @@ export function FilterPanel({ onApply, className = "" }: FilterPanelProps) {
 						>
 							<X className="h-4 w-4 mr-1" />
 							Clear
-					</Button>
+						</Button>
 					</div>
 				</CollapsibleContent>
 			</Collapsible>

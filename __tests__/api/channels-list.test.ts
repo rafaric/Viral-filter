@@ -57,7 +57,14 @@ class MockNextRequest {
 	headers: Map<string, string>;
 	body: string | null;
 
-	constructor(url: string, options?: { method?: string; headers?: Record<string, string>; body?: string }) {
+	constructor(
+		url: string,
+		options?: {
+			method?: string;
+			headers?: Record<string, string>;
+			body?: string;
+		},
+	) {
 		this.url = url;
 		this.method = options?.method || "GET";
 		this.headers = new Map(Object.entries(options?.headers || {}));

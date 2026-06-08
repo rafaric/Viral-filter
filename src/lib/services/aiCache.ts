@@ -57,9 +57,11 @@ export class AICacheService {
 		// Check expiration
 		if (isExpired(entry.createdAt)) {
 			// Clean up expired entry
-			await prisma.aIAnalysisCache.delete({
-				where: { id: hash },
-			}).catch(() => {});
+			await prisma.aIAnalysisCache
+				.delete({
+					where: { id: hash },
+				})
+				.catch(() => {});
 			return null;
 		}
 
@@ -69,7 +71,11 @@ export class AICacheService {
 	/**
 	 * Set cached analysis result
 	 */
-	async setAnalysis(hash: string, result: string, type?: string): Promise<void> {
+	async setAnalysis(
+		hash: string,
+		result: string,
+		type?: string,
+	): Promise<void> {
 		const expiresAt = new Date(Date.now() + AI_CACHE_TTL);
 
 		await prisma.aIAnalysisCache.upsert({
@@ -94,9 +100,11 @@ export class AICacheService {
 	 * Delete a specific cached entry
 	 */
 	async deleteAnalysis(hash: string): Promise<void> {
-		await prisma.aIAnalysisCache.delete({
-			where: { id: hash },
-		}).catch(() => {});
+		await prisma.aIAnalysisCache
+			.delete({
+				where: { id: hash },
+			})
+			.catch(() => {});
 	}
 
 	/**

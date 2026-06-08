@@ -20,7 +20,9 @@ export default function WatchlistPage() {
 	const [error, setError] = useState<string | null>(null);
 	const [newChannelId, setNewChannelId] = useState("");
 	const [isAdding, setIsAdding] = useState(false);
-	const [analyzingChannels, setAnalyzingChannels] = useState<Set<string>>(new Set());
+	const [analyzingChannels, setAnalyzingChannels] = useState<Set<string>>(
+		new Set(),
+	);
 
 	// Fetch watchlist
 	const fetchWatchlist = useCallback(async () => {
@@ -111,7 +113,9 @@ export default function WatchlistPage() {
 				),
 			);
 		} catch (err) {
-			setError(err instanceof Error ? err.message : "Failed to analyze channel");
+			setError(
+				err instanceof Error ? err.message : "Failed to analyze channel",
+			);
 		} finally {
 			setAnalyzingChannels((prev) => {
 				const next = new Set(prev);
@@ -169,7 +173,10 @@ export default function WatchlistPage() {
 						}}
 						className="flex-1"
 					/>
-					<Button onClick={handleAddChannel} disabled={isAdding || !newChannelId.trim()}>
+					<Button
+						onClick={handleAddChannel}
+						disabled={isAdding || !newChannelId.trim()}
+					>
 						{isAdding ? (
 							<Loader2 className="h-4 w-4 mr-2 animate-spin" />
 						) : (
@@ -191,14 +198,17 @@ export default function WatchlistPage() {
 					</h2>
 					{analyzingChannels.size > 0 && (
 						<Badge variant="secondary" className="animate-pulse">
-							Analyzing {analyzingChannels.size} channel{analyzingChannels.size > 1 ? "s" : ""}
+							Analyzing {analyzingChannels.size} channel
+							{analyzingChannels.size > 1 ? "s" : ""}
 						</Badge>
 					)}
 				</div>
 
 				{channels.length === 0 ? (
 					<Card className="p-12 text-center">
-						<p className="text-muted-foreground">No channels in your watchlist</p>
+						<p className="text-muted-foreground">
+							No channels in your watchlist
+						</p>
 						<p className="text-sm text-muted-foreground mt-1">
 							Add your first channel above to get started
 						</p>

@@ -20,6 +20,11 @@ export interface SearchState {
 }
 
 /**
+ * Analysis types
+ */
+export type AnalysisType = "idea" | "keyword" | "competitor" | "optimize";
+
+/**
  * UI state interface
  */
 export interface UIState {
@@ -27,6 +32,10 @@ export interface UIState {
 	selectedVideos: string[];
 	analyzingVideo: string | null;
 	streamingActive: boolean;
+	aiPanelOpen: boolean;
+	currentAnalysisType: AnalysisType;
+	analysisResult: string | null;
+	analysisError: string | null;
 }
 
 /**
@@ -57,9 +66,16 @@ export interface AppActions {
 	// Search actions
 	setQuery: (query: string) => void;
 	setFilters: (filters: SearchFilters) => void;
-	updateFilter: (key: keyof SearchFilters, value: SearchFilters[keyof SearchFilters]) => void;
+	updateFilter: (
+		key: keyof SearchFilters,
+		value: SearchFilters[keyof SearchFilters],
+	) => void;
 	clearFilters: () => void;
-	setResults: (results: Video[], nextPageToken?: string, cached?: boolean) => void;
+	setResults: (
+		results: Video[],
+		nextPageToken?: string,
+		cached?: boolean,
+	) => void;
 	appendResults: (results: Video[], nextPageToken?: string) => void;
 	setLoading: (isLoading: boolean) => void;
 	setError: (error: string | null) => void;
@@ -74,6 +90,14 @@ export interface AppActions {
 	clearSelection: () => void;
 	setAnalyzingVideo: (videoId: string | null) => void;
 	setStreamingActive: (active: boolean) => void;
+	setAiPanelOpen: (open: boolean) => void;
+	toggleAiPanel: () => void;
+
+	// AI Analysis actions
+	setAnalysisType: (type: AnalysisType) => void;
+	setAnalysisResult: (result: string | null) => void;
+	setAnalysisError: (error: string | null) => void;
+	clearAnalysis: () => void;
 
 	// Quota actions
 	setQuota: (quota: QuotaState) => void;
@@ -112,6 +136,10 @@ const initialUIState: UIState = {
 	selectedVideos: [],
 	analyzingVideo: null,
 	streamingActive: false,
+	aiPanelOpen: true,
+	currentAnalysisType: "idea",
+	analysisResult: null,
+	analysisError: null,
 };
 
 /**
@@ -252,6 +280,42 @@ export const useAppStore = create<AppState & AppActions>((set, get) => ({
 			ui: { ...state.ui, streamingActive: active },
 		})),
 
+	setAiPanelOpen: (open) =>
+		set((state) => ({
+			ui: { ...state.ui, aiPanelOpen: open },
+		})),
+
+	toggleAiPanel: () =>
+		set((state) => ({
+			ui: { ...state.ui, aiPanelOpen: !state.ui.aiPanelOpen },
+		})),
+
+	// AI Analysis actions
+	setAnalysisType: (type) =>
+		set((state) => ({
+			ui: { ...state.ui, currentAnalysisType: type },
+		})),
+
+	setAnalysisResult: (result) =>
+		set((state) => ({
+			ui: { ...state.ui, analysisResult: result },
+		})),
+
+	setAnalysisError: (error) =>
+		set((state) => ({
+			ui: { ...state.ui, analysisError: error },
+		})),
+
+	clearAnalysis: () =>
+		set((state) => ({
+			ui: {
+				...state.ui,
+				analysisResult: null,
+				analysisError: null,
+				streamingActive: false,
+			},
+		})),
+
 	// Quota actions
 	setQuota: (quota) =>
 		set(() => ({
@@ -292,10 +356,14 @@ export const useAppStore = create<AppState & AppActions>((set, get) => ({
  * Selector hooks for common state slices
  */
 export const useSearchQuery = () => useAppStore((state) => state.search.query);
-export const useSearchFilters = () => useAppStore((state) => state.search.filters);
-export const useSearchResults = () => useAppStore((state) => state.search.results);
-export const useIsLoading = () => useAppStore((state) => state.search.isLoading);
-export const useSelectedVideos = () => useAppStore((state) => state.ui.selectedVideos);
+export const useSearchFilters = () =>
+	useAppStore((state) => state.search.filters);
+export const useSearchResults = () =>
+	useAppStore((state) => state.search.results);
+export const useIsLoading = () =>
+	useAppStore((state) => state.search.isLoading);
+export const useSelectedVideos = () =>
+	useAppStore((state) => state.ui.selectedVideos);
 export const useQuotaState = () => useAppStore((state) => state.quota);
 
 /**
@@ -328,6 +396,12 @@ export const useUIActions = () => {
 		clearSelection: store.clearSelection,
 		setAnalyzingVideo: store.setAnalyzingVideo,
 		setStreamingActive: store.setStreamingActive,
+		setAiPanelOpen: store.setAiPanelOpen,
+		toggleAiPanel: store.toggleAiPanel,
+		setAnalysisType: store.setAnalysisType,
+		setAnalysisResult: store.setAnalysisResult,
+		setAnalysisError: store.setAnalysisError,
+		clearAnalysis: store.clearAnalysis,
 	};
 };
 

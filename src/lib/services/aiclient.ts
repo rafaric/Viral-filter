@@ -100,7 +100,10 @@ export class OpenCodeClient {
 	/**
 	 * Non-streaming chat completion
 	 */
-	async chat(messages: ChatMessage[], options: ChatOptions = {}): Promise<string> {
+	async chat(
+		messages: ChatMessage[],
+		options: ChatOptions = {},
+	): Promise<string> {
 		const response = await fetch(`${this.baseUrl}/chat/completions`, {
 			method: "POST",
 			headers: this.getHeaders(),

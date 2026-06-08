@@ -6,7 +6,11 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { env } from "@/lib/env";
-import { createOpenCodeClient, AVAILABLE_MODELS, type ModelName } from "@/lib/services/aiclient";
+import {
+	createOpenCodeClient,
+	AVAILABLE_MODELS,
+	type ModelName,
+} from "@/lib/services/aiclient";
 import {
 	buildIdeaPrompt,
 	buildKeywordPrompt,
@@ -153,7 +157,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 			);
 			break;
 		default:
-			return NextResponse.json({ error: "Invalid analysis type" }, { status: 400 });
+			return NextResponse.json(
+				{ error: "Invalid analysis type" },
+				{ status: 400 },
+			);
 	}
 
 	// Build messages for AI
@@ -172,7 +179,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 				// Stream chunks to client
 				for await (const chunk of aiClient.streamChat(messages)) {
 					fullContent += chunk;
-					controller.enqueue(encoder.encode(sseEncode({ type: "chunk", content: chunk })));
+					controller.enqueue(
+						encoder.encode(sseEncode({ type: "chunk", content: chunk })),
+					);
 				}
 
 				// Send done event
@@ -195,7 +204,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 				});
 			} catch (error) {
 				// Send error event
-				const errorMessage = error instanceof Error ? error.message : "Unknown error";
+				const errorMessage =
+					error instanceof Error ? error.message : "Unknown error";
 				controller.enqueue(
 					encoder.encode(sseEncode({ type: "error", message: errorMessage })),
 				);

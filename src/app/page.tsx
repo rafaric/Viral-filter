@@ -1,6 +1,6 @@
 /**
- * T3.9: Dashboard Page
- * Main page with search, filters, and results
+ * T3.9/T5.7: Dashboard Page
+ * Main page with search, filters, results, and AI Assistant integration
  */
 
 "use client";
@@ -9,11 +9,21 @@ import { useState, useCallback } from "react";
 import { SearchBar } from "@/components/SearchBar";
 import { FilterPanel } from "@/components/FilterPanel";
 import { ResultsGrid } from "@/components/ResultsGrid";
+import { AIAssistantPanel } from "@/components/AIAssistantPanel";
+import { QuotaIndicator } from "@/components/QuotaIndicator";
+import { Button } from "@/components/ui/button";
+import {
+	Collapsible,
+	CollapsibleContent,
+	CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import { useAppStore } from "@/lib/store";
 import type { Video } from "@/types";
+import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 
 export default function DashboardPage() {
 	const [hoveredVideoId, setHoveredVideoId] = useState<string | null>(null);
+	const [aiPanelOpen, setAiPanelOpen] = useState(true);
 
 	// Get store state and actions
 	const {
@@ -45,8 +55,10 @@ export default function DashboardPage() {
 			if (filters.category) params.set("category", filters.category);
 			if (filters.country) params.set("country", filters.country);
 			if (filters.language) params.set("language", filters.language);
-			if (filters.publishedAfter) params.set("publishedAfter", filters.publishedAfter);
-			if (filters.publishedBefore) params.set("publishedBefore", filters.publishedBefore);
+			if (filters.publishedAfter)
+				params.set("publishedAfter", filters.publishedAfter);
+			if (filters.publishedBefore)
+				params.set("publishedBefore", filters.publishedBefore);
 			if (filters.minViews) params.set("minViews", String(filters.minViews));
 			if (filters.minLikes) params.set("minLikes", String(filters.minLikes));
 			if (filters.sortBy) params.set("sortBy", filters.sortBy);
@@ -106,11 +118,15 @@ export default function DashboardPage() {
 		// Could open video detail modal or navigate to video page
 	}, []);
 
-	// Handle analyze video
-	const handleVideoAnalyze = useCallback((videoId: string) => {
-		// Would trigger AI analysis for this video
-		console.log("Analyze video:", videoId);
-	}, []);
+	// Handle video analyze
+	const handleVideoAnalyze = useCallback(
+		(videoId: string) => {
+			// Open AI panel and select this video for analysis
+			toggleVideoSelection(videoId);
+			setAiPanelOpen(true);
+		},
+		[toggleVideoSelection],
+	);
 
 	// Handle filter apply
 	const handleFilterApply = useCallback(() => {
@@ -130,8 +146,13 @@ export default function DashboardPage() {
 			<main className="flex-1 flex flex-col overflow-hidden">
 				{/* Header with Search Bar */}
 				<header className="flex-shrink-0 border-b p-4">
-					<div className="max-w-3xl mx-auto">
-						<SearchBar onSearch={handleSearch} />
+					<div className="max-w-3xl mx-auto flex items-center gap-4">
+						<div className="flex-1">
+							<SearchBar onSearch={handleSearch} />
+						</div>
+						<div className="flex-shrink-0">
+							<QuotaIndicator compact endpoint="/api/quota" />
+						</div>
 					</div>
 				</header>
 
@@ -168,10 +189,18 @@ export default function DashboardPage() {
 
 					{/* Selection actions */}
 					{selectedVideos.length > 0 && (
-						<div className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-background border rounded-lg shadow-lg p-3 flex items-center gap-3">
+						<div className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-background border rounded-lg shadow-lg p-3 flex items-center gap-3 z-10">
 							<span className="text-sm">
-								{selectedVideos.length} video{selectedVideos.length > 1 ? "s" : ""} selected
+								{selectedVideos.length} video
+								{selectedVideos.length > 1 ? "s" : ""} selected
 							</span>
+							<Button
+								variant="outline"
+								size="sm"
+								onClick={() => setAiPanelOpen(true)}
+							>
+								Analyze with AI
+							</Button>
 							<button
 								onClick={clearSelection}
 								className="text-sm text-muted-foreground hover:text-foreground"
@@ -182,6 +211,29 @@ export default function DashboardPage() {
 					)}
 				</div>
 			</main>
+
+			{/* AI Assistant Panel (Right Sidebar) */}
+			<aside className="w-96 flex-shrink-0 border-l overflow-hidden">
+				<Collapsible open={aiPanelOpen} onOpenChange={setAiPanelOpen}>
+					<CollapsibleTrigger asChild>
+						<div className="flex items-center justify-between p-4 border-b cursor-pointer hover:bg-muted/50">
+							<span className="text-sm font-medium">AI Assistant Panel</span>
+							<Button variant="ghost" size="sm" className="h-6 w-6 p-0">
+								{aiPanelOpen ? (
+									<ChevronDownIcon className="h-4 w-4" />
+								) : (
+									<ChevronUpIcon className="h-4 w-4" />
+								)}
+							</Button>
+						</div>
+					</CollapsibleTrigger>
+					<CollapsibleContent>
+						<div className="h-[calc(100vh-8rem)] overflow-y-auto">
+							<AIAssistantPanel collapsible={false} />
+						</div>
+					</CollapsibleContent>
+				</Collapsible>
+			</aside>
 		</div>
 	);
 }
